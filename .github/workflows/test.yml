@@ -1,0 +1,30 @@
+name: 'All tests'
+on: [pull_request, push]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install valgrind
+      run: sudo apt-get install -y valgrind
+    - name: Install gcovr
+      run: sudo apt-get install python3-setuptools && sudo pip3 install git+https://github.com/gcovr/gcovr.git
+    - name: Install cppcheck
+      run: sudo apt-get install -y cppcheck
+    - name: Run Linter
+      run: cd src && cppcheck *.c
+    - name: Configure
+      run: sh configure.sh
+    - name: Make
+      run: cd build && cmake .. && make
+    - name: Test
+      run: cd build && make coverage && test/arithmeticProgInArray_tests
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage-report
+        path: build/coverage/index.html
