@@ -12,7 +12,7 @@ extern "C"
 
 TEST(meanValue, fileStreams)
 {
-    const char *path = "../test/test.txt";
+    const char *path = "../../test/test.txt";
     double *means = new double[COORDINATES];
     meanValue(path, &means, COORDINATES);
 

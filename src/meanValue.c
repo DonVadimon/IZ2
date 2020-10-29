@@ -6,10 +6,11 @@
 void meanValue(const char *path, double **dest, const int _COORDINATES)
 {
     FILE *fp = fopen(path, "r");
-    assert(fp != NULL && "File was not opened");
+    printf("\nTRY TO OPEN FILE ON PATH = %s\n", path);
+    assert(fp != NULL && "File was not opened on path ");
     int size;
     fscanf(fp, "%d", &size);
-    assert(size > 0);
+    assert(size > 0 && "size < 0");
 
     //Zero value for destination array
     for (int i = 0; i < _COORDINATES; i++)
