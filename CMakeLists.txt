@@ -6,6 +6,9 @@ project(TryCI VERSION 1.0
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
+string(APPEND CMAKE_C_FLAGS " -Wall -Werror -Wpedantic")
+string(APPEND CMAKE_CXX_FLAGS " -Wall -Werror -Wpedantic")
+
 # Добавление покрытия кода
 if (CMAKE_BUILD_TYPE MATCHES Debug)
   include(CodeCoverage)
@@ -14,10 +17,8 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
     NAME coverage
     EXECUTABLE valgrind --leak-check=full --show-leak-kinds=all ctest
     BASE_DIRECTORY "${PROJECT_SOURCE_DIR}"
-    EXCLUDE "build/*" "test/*" "src/main.c" "src/customer.c")
+    EXCLUDE "build/*" "test/*" "src/main.c")
 endif()
-
-# enable_testing()
 
 ##
 ### Test definitions ###

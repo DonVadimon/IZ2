@@ -22,7 +22,7 @@ jobs:
     - name: Make
       run: cd build && cmake .. && make
     - name: Test
-      run: cd build && make coverage && test/arithmeticProgInArray_tests
+      run: cd build && make coverage && ctest -VV
     - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:
