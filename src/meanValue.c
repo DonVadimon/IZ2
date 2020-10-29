@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-void meanValue(const char *path, double **dest, const int _COORDINATES)
+int meanValue(const char *path, double **dest, const int _COORDINATES)
 {
     FILE *fp = fopen(path, "r");
     printf("\nTRY TO OPEN FILE ON PATH = %s\n", path);
@@ -34,4 +34,6 @@ void meanValue(const char *path, double **dest, const int _COORDINATES)
         (*dest)[i] /= size;
     }
     fclose(fp);
+
+    return 1;
 }

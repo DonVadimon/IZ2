@@ -7,6 +7,7 @@
 extern "C"
 {
 #include "testy/meanValue.h"
+#include "testy/meanValueMT.h"
 #include <stdio.h>
 }
 
@@ -28,4 +29,24 @@ TEST(meanValue, fileStreams)
     printf("\n");
 
     delete[] means;
+}
+
+TEST(meanValueMT, ok)
+{
+    const char *path = "../../test/test.txt";
+    double *means = new double[COORDINATES];
+    meanValueMT(path, &means, COORDINATES);
+
+    //Right answer
+    double answer[COORDINATES] = {3, 4.4, 6.2};
+
+    std::cout << "\nHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\nMEAN VALUES:\t";
+    for (int i = 0; i < COORDINATES; i++)
+    {
+        std::cout << means[i] << ' ';
+        ASSERT_TRUE(answer[i] == means[i]);
+    }
+    printf("\n");
+
+    delete[] means;    
 }

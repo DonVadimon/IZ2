@@ -6,6 +6,8 @@ list(REMOVE_ITEM sources "${PROJECT_SOURCE_DIR}/src/main.c")
 file(GLOB tests "${PROJECT_SOURCE_DIR}/test/*.cpp")
 list(REMOVE_ITEM tests "${PROJECT_SOURCE_DIR}/test/main.cpp")
 
+find_package(Threads REQUIRED)
+
 foreach(file ${tests})
   set(name)
   get_filename_component(name ${file} NAME_WE)
@@ -13,6 +15,8 @@ foreach(file ${tests})
     ${sources}
     ${file}
     "${PROJECT_SOURCE_DIR}/test/main.cpp")
+    target_compile_options("${name}_tests" PUBLIC "-pthread")
+    target_link_libraries ("${name}_tests" ${CMAKE_THREAD_LIBS_INIT})
   target_link_libraries("${name}_tests" gtest_main)
   add_test(NAME ${name} COMMAND "${name}_tests")
 endforeach()

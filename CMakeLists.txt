@@ -6,8 +6,8 @@ project(TryCI VERSION 1.0
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
-string(APPEND CMAKE_C_FLAGS " -Wall -Werror -Wpedantic")
-string(APPEND CMAKE_CXX_FLAGS " -Wall -Werror -Wpedantic")
+string(APPEND CMAKE_C_FLAGS " -Wall -Werror -Wpedantic -lpthread")
+string(APPEND CMAKE_CXX_FLAGS " -Wall -Werror -Wpedantic -lpthread")
 
 # Добавление покрытия кода
 if (CMAKE_BUILD_TYPE MATCHES Debug)
@@ -44,8 +44,13 @@ add_subdirectory(test)
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
+find_package(Threads REQUIRED)
+
 file(GLOB sources
-  "${PROJECT_SOURCE_DIR}/include/testy/*.h"
-  "${PROJECT_SOURCE_DIR}/src/*.c")
+"${PROJECT_SOURCE_DIR}/include/testy/*.h"
+"${PROJECT_SOURCE_DIR}/src/*.c")
 
 add_executable(main ${sources})
+
+target_compile_options(main PUBLIC "-pthread")
+target_link_libraries (main ${CMAKE_THREAD_LIBS_INIT})
