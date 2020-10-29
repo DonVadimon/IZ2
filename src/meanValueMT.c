@@ -165,11 +165,9 @@ void *thread_routine(void *args)
     int symb = 0;
     for (unsigned char *symb_p = copy.left; symb_p < copy.right; symb_p++)
     {
-        //printf("%c", *symb_p);
         if (*symb_p != ' ' && *symb_p != '\n' && symb_p != copy.last_ch)
         {
             rank = power(10.0, (double)p);
-            //printf("%d\n", rank);
             symb = ((int)(*symb_p) - '0');
             num += symb * rank;
             p++;
@@ -177,8 +175,6 @@ void *thread_routine(void *args)
         }
         p = 0;
         num = ReverseNum(num);
-
-        printf("\nNUM = %d\n", num);
 
         // lock mutex before value change
         errflag = pthread_mutex_lock(mutex);
@@ -188,8 +184,6 @@ void *thread_routine(void *args)
             printf("\nError in thread_routin\n");
             return NULL;
         }
-
-        
 
         meanVals.vals[j % copy.COORDINATES] += num;
 
